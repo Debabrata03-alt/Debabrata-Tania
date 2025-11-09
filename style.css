@@ -1,0 +1,286 @@
+/* --- Global Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffdee9 0%, #b5b0ff 100%);
+    background-size: 200% 200%;
+    background-attachment: fixed;
+    color: #333;
+    cursor: none;
+
+    animation: gradientScroll 10s ease infinite alternate;
+}
+
+@keyframes gradientScroll {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* --- Star Cursor Style --- */
+.star {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 10px white, 0 0 20px white;
+    opacity: 1;
+    transition: transform 0.1s linear, opacity 0.5s linear;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.star.fade {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 1s linear;
+}
+
+
+/* --- Page & Content Styles --- */
+.page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Added more top/bottom padding for smaller screens to breathe */
+    padding: 60px 20px; 
+    text-align: center;
+    flex-direction: column;
+}
+
+.content {
+    max-width: 1200px;
+    width: 100%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* --- Page 1: Home --- */
+#home h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem; 
+    font-weight: 400;
+    color: #4a4a88;
+    line-height: 1.4;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 25px; 
+    background-color: #7b68ee;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem; 
+    font-weight: bold;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background-color: #5a48c7;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Page 2: About --- */
+#about h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem; 
+    font-weight: 400;
+    color: #4a4a88;
+    margin-bottom: 20px;
+}
+
+#about p {
+    font-size: 1rem; 
+    line-height: 1.6; 
+    color: #222;
+}
+
+#gallery-main h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem; 
+    font-weight: 400;
+    color: #4a4a88;
+    margin-bottom: 30px;
+}
+
+/* --- Gallery Grid (Desktop View) --- */
+.gallery-container {
+    display: grid;
+    /* Default: 4 columns */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 15px;
+    width: 100%;
+}
+
+.gallery-item {
+    width: 100%;
+    padding-bottom: 100%; 
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.gallery-item img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.3s ease-in-out; 
+}
+
+/* --- HOVER EFFECT: BLUR AND DATE DISPLAY --- */
+.gallery-item:hover img {
+    filter: blur(2px) brightness(0.7);
+    transform: scale(1.05);
+}
+
+.gallery-item::after {
+    content: attr(data-date);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 1.3rem; 
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
+}
+
+.gallery-item:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    transform: none;
+}
+
+
+/* --- Scroll Animations --- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-on-scroll.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-item {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.gallery-item.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ========================================================== */
+/* --- MEDIA QUERIES FOR MOBILE/TABLET RESPONSIVENESS --- */
+/* ========================================================== */
+
+/* Tablet View (Screens up to 1024px) */
+@media (max-width: 1024px) {
+    .content {
+        max-width: 95%; /* Use more of the screen width */
+    }
+    #home h1 {
+        font-size: 2.5rem;
+    }
+    .gallery-container {
+        /* Switch to 3 columns on tablets/laptops */
+        grid-template-columns: repeat(3, 1fr); 
+    }
+}
+
+/* Mobile View (Screens up to 600px) */
+@media (max-width: 600px) {
+    
+    /* General Font/Spacing adjustments */
+    .page {
+        padding: 40px 10px;
+    }
+    .content {
+        padding: 20px 15px;
+    }
+    #home h1 {
+        font-size: 2rem;
+    }
+    #about h2, #gallery-main h2 {
+        font-size: 2rem;
+    }
+    #about p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    .btn {
+        font-size: 1rem;
+        padding: 8px 20px;
+    }
+
+    /* --- KEY CHANGE: Single Column Gallery for Mobile --- */
+    .gallery-container {
+        /* Only one column now for maximum photo size */
+        grid-template-columns: 1fr; 
+        gap: 20px; /* Increase gap for separation */
+    }
+    
+    .gallery-item {
+        /* On mobile, images are large and stacked */
+        border-radius: 10px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Hover effect adjustments for touch devices */
+    .gallery-item:hover img {
+        /* No scaling on hover for touch devices to prevent layout jump */
+        transform: none; 
+    }
+    
+    .gallery-item::after {
+        font-size: 1.1rem;
+    }
+
+    /* Hide the star cursor entirely on mobile as it interferes with touch */
+    .star {
+        display: none;
+    }
+}
